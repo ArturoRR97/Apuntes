@@ -1,0 +1,202 @@
+---
+title: "Git y GitHub"
+author: Arturo Rivas Rojas
+date: 14/12/18
+output:
+    pdf_document:
+        latex_engine: lualatex
+        toc: true
+        toc_depth: 3
+        number_sections: true
+        keep_tex: false
+        extra_dependencies:
+            - float
+            - hyperref
+fontsize: 14pt
+documentclass: report
+urlcolor: blue
+mainfont: Hack
+
+---
+
+# Curso Profesional de Git
+\label{Git}
+
+
+## Sistema Control de Versiones
+\label{Control de Versiones}
+
+Sistema que registra los cambios realizados sobre un archivo o conjunto de archivos a lo largo del tiempo.
+
+### Clasificación
+\label{Clasificación}
+
+#### Locales
+\label{Locales}
+
+La información, las versiones, solo existe en una sola computadora.
+```{r local, out.width='50%', fig.align='center', fig.cap='Sistema Local', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/local.png')
+```
+
+#### Centralizados
+\label{Centralizados}
+
+Los cambios se guardan en un servidor que comparte con todos sus subscriptores los cambios
+```{r centralizado, out.width='50%', fig.align='center', fig.cap='Sistema centralizado', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/centralizado.png')
+```
+
+#### Distribuidos (Git)
+\label{Distribuidos}
+
+Se guarda una copia del repositorio en la coputadora de cada participante. Que operan de manera independiente y puede mezclarce en cualquier momento.
+```{r distribuido, out.width='50%', fig.align='center', fig.cap='Sistema distribuido', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/distribuido.png')
+```
+
+### Beneficios de usar Git
+\label{Beneficios}
+
++ Trabajar offline
++ Integridad de los datos
+
+### Estados de Git
+\label{Estados}
+
+```{r estados, out.width='50%', fig.align='center', fig.cap='Los 3 estados de Git', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/estados.png')
+```
+
+#### Working directory
+\label{estado1}
+
+Es el directorio local en donde se guarda la copia del repositorio. Se agregan o se hacen cambios a los archivos de manera local.
+
+#### Staging area
+\label{estado2}
+
+Se realiza un add para preparar el archivo para su commit.
+
+#### Git directory (repositorio)
+\label{estado3}
+
+Se realiza el commit y se distribuyen los cambios realizados hacia las copias.
+ 
+##### SHA-1
+\label{sha-1}
+
+Secure Hash Algorithm, Algoritmo de Hash Seguro, es un conjunto de numeros cifrados que sirven como id de lso commits.
+
+### GitHub
+\label{GitHub}
+
+Git y GitHub no son lo mismo.  
+Git es el software de control de cambios mientras que GitHub es la plataforma host de los repositorios.   
+Aparte GitHub aparte del control de versiones tiene muchas mas herramientas para la organización.
+
+### Manejo de archivos en la terminal
+\label{comandos terminal}
+
++ **cd:** cambiar de directorio.
+    - ejemplo: cd Desktop
++ **mkdir:** crear directorio.
+    - ejemplo: mkdir apuntes
++ **ls:** lista de archivos.
+    - ejemplo: ls
++ **touch:** crear archivo.
+    - ejemplo: touch file.txt
++ **rm:** eliminar archivos y directorios.
+    - ejemplo: rm file.txt, rm -r apuntes
+
+## Comandos de Git
+\label{comandos git}
+
+### Inicializar repositorios
+\label{init}
+
++ git **init** [nombre] : inicializa un repositorio.
++ git **init** : dentro de la carpeta que queremos que sea el repositorio.
+
+### Trabajo en el workplace
+\label{status}
+
++ git **status** : muestra la rama y los cambios sin confirmar.
++ git **add** [archivo o directorio] :** pasar los cambios al estado \hyperref[estado2]{staging}.
++ git **rm `--`cached** [archivo o directorio] : borrar los cambios del git.
++ git **commit** : \hyperref[estado3]{confimar} los cambios a git.
+    - **-m** ["mensaje"] : asociar un mensaje para nuestro commit.
+    - **`--`amend** : concatenar el commit con el anterior.
+
+### Nombrar Versiones
+\label{tag}
+
++ git **tag** [etiqueta] : etiquetar o nombrar version actual del repositorio.
++ git **tag** [etiqueta] **sha-1(codigo del commit)** : etiquetar o nombrar version actual del repositorio.
+    - **-a:** etiqueta
+    - **-m:** mensaje
+    - **-f:** renombrar
+    - **-d:** eliminar
+
+### Bitacora de commits
+\label{bitacora}
+
++ git **log** : lista de commits con su respectivo \hyperref[sha-1]{sha-1}, autor, fecha y mensaje. Para salir basta con presionar **q**.
+    - **`--`oneline** : infomación reducida a una linea.
+    - **`--`graph** : grafico con respecto a las ramas.
+    - **-#** : numero de commits que quieres visualizar comenzando desde el ultimo.
+    - **> [archivo]** :respalda el log en el archivo.
+
+```{r log, out.width='75%', fig.align='center', fig.cap='imagen de la bitacora', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/log.png')
+```
+```{r log-oneline, out.width='75%', fig.align='center', fig.cap='imagen de la bitacora con todas las banderas sin banderas', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/log-oneline.png')
+```
+### Differencias entre commits
+\label{diff}
+
++ git **diff** [\hyperref[sha-1]{commit}] : permite ver las differencias entre el estado actual y el commit.
++ git **diff** [\hyperref[sha-1]{commit1}] [\hyperref[sha-1]{commit2}]: permite ver las differencias entre los commits que se pasaron como parametros. El orden de los parametros afecta el resultado. Se muestran las acciones que tendrian que pasar para llegar del primer commit al segundo.
+
+### Borrar o reescribir
+\label{reset}
+
++ git **reset** : reescribe la historia del proyecto.
+    - **`--`soft** [\hyperref[sha-1]{commit}] : se resetea al commit del sha-1, los commits posteriores a este se borran. Sin borrar archivos y dejando los cambios que ya se habian \hyperref[estado3]{confirmado} en \hyperref[estado2]{staging}.
+    - **`--`mixed** [\hyperref[sha-1]{commit}] : a diferencia del **`--`soft** descarta completamente los commits regresandolos al estado 1, \hyperref[estado1]{Working directory}. 
+    - **`--`hard** [\hyperref[sha-1]{commit}] :
+    elimina los cambios tando \hyperref[estado3]{confirmados} o en \hyperref[estado2]{staging}. Tambien funciona de manera inversa es decir si se hizo un **reset `--`hard** al inicio del repositorio y luego se hace un **reset `--`hard** al ultimo commit, este se recupera.
+    - **HEAD** [archivo] : quita de \hyperref[estado2]{staging} al archivo seleccionado.
+
+## Ramas (branches)
+\label{branches}
+
+Son las versiones alternas que pude tener nuestro proyecto en git
+
+### Master
+\label{master}
+
+Es la rama principal y se genera por defecto.
+
+### Ramas Paralelas
+\label{branch}
+
+Es la forma correcta de trabajar en git pues los bugs y las nuevas caracteristicas se programan de manera separada al proyecto pirncipal y uan vez que estan completas se agregan a la rama master.
+
+### Comandos para Ramas
+\label{branch command}
+
++ git **branch** [nombre de la rama] : crea la rama con el nombre dado.
+    - **-l** : muestra la lista de ramas del proyecto.
+    - **-d** [rama] : borrar la rama si es que no se han realizado commits
+    - **-D** [rama] : borrar la rama sin importar nada.
+    - **-m** [rama] [nuevo nombre] :  renombrar la rama.
++ git **checkout** [rama|\hyperref[sha-1]{commit}] : navegar entre ramas o commits.
+    - **-b** [nombre] : crear y navegar a una nueva rama.
++ git **merge** [rama] : se mezcla la rama indicada con la rama en la que estamos ubicados.
+    - **Fast-forward** : ya que la rama a mezclar sigió la linea temporal de la rama en la que estamos solo se agregaron los cambios sin problemas
+    - **Auto-merging** : si ahora la rama a mezclar trabajo de manera paralela a la rama en la que estamos ubicados. por lo que se necesitna mezclar con cierta logica.
+        * **Conflictos** : archivos que git no supo con que version quedarse y se deben resolver de manera manual.
+
++ git **rebase** [rama] : mezcla la rama dada con la rama en la que esta ubicado pero reescribe la bitacora por lo que no pide commits extras y el grafico es lineal. Al reescribir la historia de los commits se pude alterar el trabajo de los demas por lo que es mas peligroso que el merge. 

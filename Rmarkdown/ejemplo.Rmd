@@ -1,0 +1,41 @@
+---
+title: "Titulo"
+author: Arturo Rivas Rojas
+date: Fecha
+output:
+    pdf_document:
+        toc: true
+        toc_depth: 3
+        number_sections: true
+        keep_tex: false
+        extra_dependencies:
+            float
+fontsize: 14pt
+documentclass: report
+urlcolor: blue
+
+---
+
+# Rivas Rojas Arturo
+## ejemplo
+### tercer nivel
+#### cuarto
+##### quinto
+\textit{hola}
+
+mejor ejemplo de todos
+**viva**
+```{python}
+x = 2
+print (x**2)
+```
+[Google](https://www.google.com)   
+![hola mundo](images/hola.png)   
+```{r, out.width='75%', fig.align='center', fig.cap='hola mundo', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/hola.png')
+```
+```{r, child='hola.Rmd'}
+```
+
+
+
