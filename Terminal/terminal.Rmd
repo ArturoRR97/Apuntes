@@ -1,0 +1,20 @@
+---
+title: "Utilizando la Termial"
+author: Arturo Rivas Rojas
+date: 17/12/2018
+output:
+    pdf_document:
+        latex_engine: lualatex
+        toc: true
+        toc_depth: 3
+        number_sections: true
+        keep_tex: false
+        extra_dependencies:
+            - float
+            -hyperref
+fontsize: 14pt
+documentclass: report
+urlcolor: blue
+mainfont: Hack
+
+---
