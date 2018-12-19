@@ -1,0 +1,94 @@
+---
+title: "Oratoria"
+author: Arturo Rivas Rojas
+date: 18/12/2018
+output:
+    pdf_document:
+        latex_engine: lualatex
+        toc: true
+        toc_depth: 3
+        number_sections: true
+        keep_tex: false
+        extra_dependencies:
+            - float
+            - caption
+fontsize: 14pt
+documentclass: report
+urlcolor: blue
+mainfont: Hack
+
+---
+
+# Miedo {#miedo}
+
+El miedo en publico es lo mas normal del mundo, el dia qeu no tengas miedo antes de hablar en público es por que te parece aburrido lo que haces.
+
+Debemos buscar la razón que nos hace sentir terror. La fuente de nuestra incertidumbre.
+
+La fuente mas común se debe al efecto Dunning-Kruger. En palabras sencillas es cuando las personas preparadas tienen un complejo de inferioridad porque al estar tan preparadas, el tema les parece muy sencillo y creen ser incompetentes y la audiencia tiene presenta un complejo de superioridad ilusorio.
+
+La audiencia no juzga por que la audiencia "no sabe lo que no sabe", solo le importa el contenido que expondras el "show debe continuar". Nunca le digas a la audiencia lo que no sabe.
+
+El flujo es la clave para hablar en publico, el flujo, la zona , el flow como se que le llamemos a punto de maxima concentración y comodidad.
+
+# Disculpas {#perdon}
+
+Debes evitar disculparte y procurar dar las gracias. Pedir perdon es por nosotros no por lo demas. Siempre hay que tener en mente la razón por la que nos diculpamos.
+
+Si ocurre un error, solo espera la reaccion del publico y continua, no te disculpes porque rompes el hilo de la conversación y perderas a gente de tu audiencia.
+
+Admitir que se cometió un error es bueno siempre y cuando aprovechemos ese error para que la audiencia empatice contigo.
+
+Tu prioridad siempre es continuar, si el error no afecta al flujo lo dejas pasar y si afecta lo arreglas en el momento sin disculparte.
+
+# Cerebro {#brain}
+
+El cerebro ocupa distintas partes para hablar en público o en privado. Por esto cuando nos preparamos nos preparamos mal.
+
+Cundo hablamos con una o pocas persona hablamos enfocandonos en la reacciones de las otras personas, pero frente a una audiencia que esta "lejos" esto no nos sirve.
+
+En la pelicula del "Discurso del Rey" es un gran ejemplo que utilizamos la misma zona para hablar en publico que la que usamos para cantar.
+
+Hay dos opciones:
+
++ Puedes practicar imaginandote a una audiencia de gran tamaño y asi practicar con la zona del cerebro que en verdad va a dar la conferencia.
+
++ Puedes imaginarte que hablas en privado mientras das al conferencia.
+
+# Reglas {#rules}
+
+- Practicar.
+- No repetir la platica.
+- Investigar a la audiencia.
+- Un solo gran **mensaje**.
+- Una llamada a la acción.
+- Hablar Lento, Claro y Fuerte.
+- Mientete.
+- Acertivo con convicción.
+- Evitar el yo yo yo.
+- Lenguaje inclusivo.
+- Anectodos y Datos.
+- Corta y Resumida (9-12 min).
+- Dar ordenes con el porque.
+- Cerrar con resumen inspirador que refurce tu mensaje.
+- Reitera tu llamada a la acción.
+
+# Adaptarse a la Audiencia {#adaptar}
+
+La diferecia entre un gran conferencista y uno bueno es el poder adaptar tu conferencia a las diferencias culturales de tu audiencia.
+
+Por eso es importarte es lograr que la audiencia se identifique con tu charla.
+
+## Variables {#variables}
+
+- Temporada del año.
+- Pais.
+- Tema.
+- Tamaño de la audiencia.
+- Perfil de la audiencia.
+- Promoción del evento.
+- Taller o Discurso.
+- Actividades publicas.
+- Tu Objetivo.
+
+# Estructura {#estructura}
