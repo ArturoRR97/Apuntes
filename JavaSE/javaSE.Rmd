@@ -1,0 +1,74 @@
+---
+title: "Java SE"
+author: Arturo Rivas Rojas
+date: 19/12/2018
+output:
+    pdf_document:
+        latex_engine: lualatex
+        toc: true
+        toc_depth: 3
+        number_sections: true
+        keep_tex: false
+        extra_dependencies:
+            - float
+            - caption
+         template: ~/.pandoc/default.latex
+fontsize: 14pt
+documentclass: report
+urlcolor: blue
+mainfont: Hack
+
+---
+    
+# Introducción {#intro}
+
+## ¿Qué es? {#que}
+
+Java es un lenguaje de programación de **alto nivel**.
+
+Caracteristicas:
+
++ Simple
++ Orientado a Objetos
++ Distribuido
++ Multihilo
++ Arquitectura Neutral
++ Portable
++ Alto desempeño
++ Seguro
+
+Java es un lenguaje compilado e interpretado.
+
+## Filosofía {#filosofía}
+
+Escribe una vez y correlo donde quieras.
+
+## Origen {#origin}
+
+Surge en 1991 creado por James Goslin, y fue absorvido por la compañia Sun microsystems.
+
+Nacio con el proposito de comunicar dispositivos de forma configurable y portable.
+
+En el 2009 Java llego a su apogeo y se volvio propiedad de Oracle. Nacieron las certificaciones Java.
+
+### Clasificación {#clasificación}
+
++ Java SE (Standard Edition) : base y sintaxis del lenguaje. 
+
++ Java EE (Enterprise Edition) : ultima generación.
+
+## Herramientas de desarrollo {#hd}
+
+Para poder trabajar con Java es necesario tener estos 2 componentes:
+
++ JDK (Java Developer Kit): kit de desarrollo.
+
++ JRE (Java Run Enviroment): para correr las aplicaciones.
+
+### Maquina Virtual {#mv}
+
+Una vez que tenemos nuestro codigo java y lo compilamos con el comando **javac** se genera una archivo .class que contine ByteCode.
+
+La maquina virtual de Java a la que se llama con el comando **java** recibe de entrada ByteCode y lo interpreta.
+
+## Metodo Main {#main}

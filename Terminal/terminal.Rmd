@@ -47,7 +47,7 @@ mainfont: Hack
     - **-f** : la salida se recresca si el archivo tiene cambios.
 
 + **wc** : muestra la cuenta de los saltos de linea, palabras y bytes.
- - **-l** : cuenta lineas.
+    - **-l** : cuenta lineas.
 
 # Arbol de directorios {#directorios}
 
@@ -155,10 +155,12 @@ Todo lo que se ejecute en la computadora es un proceso.
 
 + [comando|programa 1] **;** [comando|programa 2] : primero se ejecuta el programa 1 y hasta que este termine incia el 2. Se pueden secuenciar n procesos todos con un **;** intermedio.
 
++ [comando|programa 1] **&** [comando|programa 2] : el comando 1 y el comando 2 se ejecutan de una manera completamente independiente.
+
 
 + **ps -wS** : lista todos los procesos que se estan ejecutando en el momento.
 
-# Pipe (**|**) {#pipe}
+## Pipe (**|**) {#pipe}
 
 Concatena comandos, es decir el standard output del primer comando lo manda como standard input del segundo.
 

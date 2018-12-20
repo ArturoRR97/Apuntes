@@ -12,6 +12,7 @@ output:
         extra_dependencies:
             - float
             - caption
+        template: ~/.pandoc/default.latex
 fontsize: 14pt
 documentclass: report
 urlcolor: blue
