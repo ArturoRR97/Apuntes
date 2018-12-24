@@ -1,7 +1,8 @@
 ---
 title: "Java SE"
-author: Arturo Rivas Rojas
-date: 19/12/2018
+subtitle: "Curso básico de Java Standard Edition"
+author: ["Arturo Rivas Rojas"]
+date: \today
 output:
     pdf_document:
         latex_engine: lualatex
@@ -12,13 +13,17 @@ output:
         extra_dependencies:
             - float
             - caption
+        includes:
+            in_header: ~/templates/poli.sty
 fontsize: 14pt
 documentclass: report
-urlcolor: blue
 mainfont: Hack
+pagesize: letter
+urlcolor: blue
+secnumdepth: 2
 
 ---
-    
+
 # Introducción {#intro}
 
 ## ¿Qué es? {#que}
@@ -174,3 +179,57 @@ En el caso de los char, castear un entero a un char nos regresa el caracter que 
 ```{r ascii, out.width='75%', fig.align='center', fig.cap='código ASCII', fig.pos='H', echo=FALSE}
 knitr::include_graphics('images/ascii.png')
 ```
+
+## Arreglos (Arrays) {#arrays}
+
+Un arreglo es un objeto donde se pueden guardar multiples variables de un mismo tipo.
+
+Entonces podemos decir que un arreglo es un contenedor finito de un tipo de variable definido.
+
+Un arreglo de una solo dimensión es una fila, uno de dos dimensiones es una matriz, uno de tres dimensiones es un cubo.
+
+Para poder imaginarnos un array de n-dimensiones lo haremos visualizando a cada array como una matryoshka de n-1 y una caja donde hay varias de estas matryoshka.
+
+```{r arrays, out.width='40%', fig.align='center', fig.cap='matryoshka', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/arrays.png')
+```
+
+## Declaración e Inicialización
+
+Para declarar un arreglo se utilizan los corchetes "[]", un par por cada dimensión.
+
++ único arreglo
+```java
+// solo la variable con los corchetes a su lado
+// sera un arreglo del tipo de dato definido.
+int arregloInt[] = new int[5], entero = 4;
+```
++ múltiples Arreglos
+```java
+// todas variables son arreglos del tipo de dato definido.
+char[][] arreglo1, arreglo2[], arreglon;
+arreglo1 = new char[12][2];
+// notamos que arreglo2 es un arreglo de arreglos
+// de 2 dimensiones eso lo vuelve un arreglo de 3 dimesiones
+arreglo2 = new char[3][2][3];
+arreglo3 = new char[21][4];
+```
+
+## Consultar
+
+Para consultar los elementos de un arreglo se utilizan indices que comienzan en el 0 y van al tamaño del arreglo-1.
+
+```java
+// un arreglo de tamaño 2
+int[2] arreglo = new int[2];
+// inicializariamos sus elementos de la siguiente manera:
+// primera posición
+arreglo[0] = 5;
+// segunda posición
+arreglo[1] = 87;
+// podemos obtener e imprimir el valor
+System.out.println(arreglo[0]);
+System.out.println(arreglo[1]);
+```
+
+# Operadores {#operadores}
