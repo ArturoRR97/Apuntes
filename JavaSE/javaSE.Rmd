@@ -136,13 +136,10 @@ Se deben trabajar entre comillas simples **'**.
 
 ### Logicos {#logicos}
 
-+ boolean (2 bytes) true or false.
++ **boolean** (2 bytes) true or false.
 ```java
 boolean isVisible = true;
 ```
-
-## Objetos {#objetos}
-
 
 # Variables {#variables}
 
@@ -233,3 +230,256 @@ System.out.println(arreglo[1]);
 ```
 
 # Operadores {#operadores}
+
+## Aritmeticos {#aritmeticos}
+
++ **Signo +**
+    - suma de 2 numeros.
+    ```java
+    int a = 3, b = 5;
+    int suma = a + b;
+    ```
+    - concatenación de 2 cadenas.
+    ```java
+    concatenacion = "Hola" + "mundo";
+    ```
++ **Signo -**
+    - resta de 2 numeros.
+    ```java
+    resta = a - b; 
+    ```
++ **Signo ´*´**
+    - multiplicación de 2 numeros.
+    ```java
+    multiplicacion = a * b;
+    ```
++ **Signo /**
+    - división de 2 numeros
+    ```java
+    division = a / b;
+    ```
++ **Signo %**
+    - residuo de la división de 2 numeros
+    ```java
+    modulo2 = a%2;
+    ```
+
+## De Asignación {#asignación}
+
++ **Signo =**
+    - asignar un valor o dirección de memoria.
+    ```java
+    int a = 5;
+    int arreglo[] = new int[5]
+    ```
++ **Signo +=**
+    - acumulador mediante suma.
+    ```java
+    a += b
+    //equivalencia
+    a = a + b;
+    ```
++ **Signo -=**
+    - acumulador mediante resta.
+    ```java
+    a -= b + c / d;
+    //equivalencia
+    a = a - (b + c / d);
+    ```
++ **Signo *=**
+    - acumulador por multiplicación.
+    ```java
+    a *= b - c * d;
+    //equivalencia
+    a = a * (b - c * d);
+    ```
++ **Signo /=**
+    - acumulador por división.
+    ```java
+    a /= b
+    //equivalencia
+    a = a / b;
+    ```
++ **Signo %=**
+    - acumulador por modulo.
+    ```java
+    a %= b
+    //equivalencia
+    a = a % b;
+    ```
+
+## Incremento y Decremento {#incremento}
+
+### Prefijo {#prefijo}
+
++ **++**
+```java
+int i = 0;
+// incrementar en 1
+++i;
+// equivalencia
+i = i + 1;
+```
++ **--**
+```java
+int i = 0;
+// decrementar en 1
+--i;
+// equivalencia
+i = i - 1;
+```
+### Posfijo {#prefijo}
+
++ **++**
+```java
+int i = 0;
+// incrementar en 1
+i++;
+// equivalencia
+i = i + 1;
+```
++ **--**
+```java
+int i = 0;
+// decrementar en 1
+i--;
+// equivalencia
+i = i - 1;
+```
+### Diferencia {#diff}
+
+```java
+int i = 3;
+System.out.println(i++); // se imprimirá 3 y luego se hará el incremento.
+i = 5;
+System.out.println(++i); // se hará el incremento primero, por lo que se imprimirá un 6.
+
+```
+
+## Relacionales {#relacionales}
+
+Todo los operadores relacionales se utilizan de manera infija, es decir entre 2 operandos.
+
++ **==**: igualdad.
++ **!=**: desigualdad.
++ **<**: menor que.
++ **>**: mayor que.
++ **<=**: menor o igual que.
++ **>=**: menor o igual que.
+
+los resultados de estos operadores son de tipo boolean. Cunado se cumplen regresan un **true** y en caso contrario un **false**
+
+## Logicos {#logicos}
+
+Los operadores logicos **&&** y **||** son operadores infijos y nos sirven para trabajar con mas de una condición.
+
++ **&&** (compuerta AND): solo si ambas condiciones a sus costados son **true**, retorna true.
+
++ **||** (compuerta OR): mientras haya un **true** en cualquiera de sus extremos el resultado sera **true**.
+
++ **!** (compuerta NOT): nega la condición que le sigue. es decir si es un **true** retorna un **false** y si es un **false** retorna un **true**.
+
+# Control de Flujo {#flujo}
+
+El flujo se controla a travez de condiciones y bucles.
+
+## If / Else {#ifelse}
+
+```java
+if(condicion){
+    System.out.println("TRUE");
+    if (condicion2){
+        instrucciones2;
+    }
+}
+else if(condicion2){
+    System.out.println("FALSE");
+}
+else{
+    instrucciones3;
+}
+```
+
+La estructura **if / else** nos permite tomar decisiones, si la condición es verdares, en este caso se imprimirá "TRUE" y si es falsa se evaluara la condicion2, si esta es verdadera se imprimirá "FALSE". Podemos aplicar esta lógica a cualquier decisión que queramos tomar.
+
+Ademas se pueden anidar ya sea en el if o en el else.
+
+## Switch {#switch}
+
+Nos facilita generar un menú. pues nos evita el tener que escribir multiples \hyperref[ifelse]{if / else}.
+
+```java
+int estación = 8;
+switch (mes) {
+    case 1:
+        System.out.println("Primavera");
+        break;
+    case 2:
+        System.out.println("Verano");
+        break;
+    case 3:
+        System.out.println("Otoño");
+        break;
+    case 4:
+        System.out.println("Iniverno");
+        break;
+    default:
+        System.out.println("Solo hay 4 estaciones");
+        break;
+}
+```
+## While {#while}
+
+Esta estructura es un bucle que mientras se cumpla la condición se ejecutara el código dentro del while.
+
+```java
+int i = 0;
+while(i < 5){
+    instrucciones;
+    i++;
+}
+```
+
+En el ejemplo de arriba, las instrucciones se repetiran 5 veces. Si fuera una condición que siempre es verdadera este seria un ciclo infinito, en el caso contrario si la condición es falsa desde un principio entonces nunca se ejecutarian las instrucciones dentro del while.
+
+
+## Do While {#do while}
+
+```java
+int i = 0;
+do{
+    instrucciones;
+    i++;
+}while(i < 5);
+```
+
+Este ciclo es muy similar al \hyperref[while]{while}, pero nos asegura que las instrucciones se ejecuten por lo menos una vez.
+
+## For {#for}
+
+```java
+// sintaxis
+for(inicialización; condición; paso){
+instrucciones;
+// ejemplo
+for(int i=5; i > 0; i--){
+System.out.println("cuenta regresiva:" + i);
+}
+```
+Los ciclos **for** son para evitar tener multiples lineas cuando se tratan de condiciones que se cumplen por el paso del ciclo, mientras que los ciclos \hyperref[while]{while} se utilizan cuando se desconoce cuando se cumplira la condición.
+
+En el ejemplo queda bastante claro cual es la estructura del ciclo **for**, primero va la inicialización que puede o no ser una declaración, la segunda es nuestra condición a evaluar y por ultimo es nuestro paso que podria ser ++, --, de n en n, i/e (logaritmico), etc.
+
+## Foreach {#foreach}
+
+```java
+// sintaxis
+for(variable : Iterador){
+instrucciones;
+}
+int arreglo[] = {3,5,6,9,5};
+for (int i : arreglo){
+    System.out.println(i);
+}
+```
+El ciclo foreach lo que nos ofrece es una herramienta para iterar sobre objetos de una manera mas sencilla y eficiente.
