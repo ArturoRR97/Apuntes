@@ -1,0 +1,301 @@
+---
+title: "Java SE"
+subtitle: "Curso Avanzado de Java Standard Edition"
+author: ["Arturo Rivas Rojas"]
+date: \today
+output:
+    pdf_document:
+        latex_engine: lualatex
+        toc: true
+        toc_depth: 3
+        number_sections: true
+        keep_tex: false
+        extra_dependencies:
+            - float
+            - caption
+        includes:
+            in_header: ~/templates/poli.sty
+fontsize: 14pt
+documentclass: report
+mainfont: Hack
+pagesize: letter
+urlcolor: blue
+toccolor: violet
+
+---
+
+# Polimorfismo {#polimorfismo}
+
+Posibilidad de construir un método, con comportamiento diferente según la clase a la que pertenece, cuando las clases están relacionadas ya sea por herencia, interfaces o clases abstractas.
+
+## Herencia {#herencia}
+
+En la herencia el polimorfismo se lleva a cabo mediante la sobreescritura de métodos. Por ejemplo en el constructor normalmnete una subclase tiene los mismos atributos que la clase padre y algunos otros, por lo que su constructor debe ser diferente entonces usando la palabra super llamamos a la clase padre y podemos lalmar a su cosntructor reciclandolo y agregar lo que falte.
+
+## Interfaces {#interfaces}
+
+Solo pueden contener costantes y definición de métodos, es decir solo la firma del método si implementación. Siempre que se implementa una interfaz se esta realizando polimorfismo.
+
+## Clases Abstractas {#abstractas}
+
+En una clase abstracta no se imlementan todos los métodos y no se pueden crear instancias de estas clases.
+
+```java
+public abstract class Figura{
+    abstract void dibujate();
+}
+```
+La palabra **abstract** es la clave para las clases abstractas y los métodos abstractos son los métodos que son obligatorios de implementar.
+
+```java
+class Triangulo extends Figura{
+    abstract void dibujate();
+}
+```
+Los métodos abstractos se heredan y se puede decidir si implementar el método o conservar sus abstracción.
+
+# JavaDoc {#javadoc}
+
+Genera documentación en HTML desde el código Java. 
+
+## Funcionamiento
+
+Java genera la documentación a través de los comentarios.
+
+```java
+// un comentario común de una sola linea.
+/* comentario común
+de multiples lineas */
+/** comentario de documentación
+* <h1> Titulo </h1>
+* <p> saltos de linea
+* */
+```
+solo los comentarios dentro del tercer tipo son tomados en cuenta para la generación del javadoc.
+
+Dentro de los comentarios javadoc se pueden utilizar etiquetas de HTML para dar formato a nuestra salida.
+
+## Etiquetas {#tags}
+
++ **@author** : autor.
++ **@version** : versión del código.
++ **@since** : año, fecha.
++ **@see** : sugerencia de visualización, como más información.
++ **@param** : parámetros.
++ **@return** : retorno del método.
++ **{@link clase/interfaz}** : genera un link a la clase o interfaz.
++ **{inheritDoc}** : historia del método, herencia o implementación de clases.
++ **{code código}** : da formato al texto código.
++ **@exception** or **@throws** : exceptiones que puede lanzar.
++ **{@value #constant}** : muestra el valor de la constante.
+
+# Clases Anidadas {#anidadas}
+
+Las clases anidadas, o nested classes. Nacen por la necesidad de tener agrupadas clases que no pueden o deben existir por separado.
+
+Una clase anidada tiene acceso a los miembros (atributos y métodos) de su clase contenedora, incluidos los privados. Lo inverso no es verdadero.
+
+## Clasificación {#clasificación}
+
++ Static Nested Classes
+
+    Se declaran utilizando la palabra reservada **static**. Y se diferencian por tener la limitación de no poder acceder a los miembros no staticos de su clase contenedora. Ademas de que no es necesario instancia a la clase contenedora para instanciar a una **static nested class**.
+
+    ```java
+    // clase contenedora
+    public class Outer{
+        // clase anidada estática
+        public static StaticInner{
+            // método de la clase anidada
+            public run(){
+            }
+        }
+        // método main de la clase contenedora
+        public static void main (String[] args){
+            // instanciando a la clase anidada
+            Outer.StaticInner nested =  new     Outer.StaticInner();
+            // llamando a un método de la clase anidada.
+            nested.run():
+            // el método run() no es estático por lo que    fue necesario instaciar a la clase para    poder llamarlo. 
+        }
+    }
+    ```
+
++ Inner classes
+
+    Son clases que se declaran de la manera común, y se diferencia por que para instanciarlas es necesario intanciar a la clase contenedora. Son mucho mas versátiles que las estáticas ya que pueden llamar a todos los miembros de la clase que los contiene.
+
+    ```java
+    // clase contenedpra
+    public class Outer {
+        //declaración de la clase interna
+        public class Inner {
+            //atributos y métodos de la clase anidada
+        }
+        // método main de la clase contenedora
+        public static void main(String[] args) {
+            // instanciando de la clase contenedora
+            Outer outer = new Outer():
+            // instanciando de la clase anidada
+            outer.Inner inner = outer.new Inner();
+        }
+    }
+    ```
+
+    - Method Local Inner Classes
+
+        Es un subconjunto de las Inner Classes pues su unica diferencia es que solo existen dentro de uno de los métodos de la clase contenedora.
+
+        ```java
+        // clase contenedora
+        public class Outer {
+            // método run() de la clase contenedora
+            void run(){
+                // declaración de la clase local de     método anidada
+                public class Local {
+                    // método run de la clase anidada
+                    void run() {
+                        //implementación
+                    }
+                }
+                // instancia de la clase anidada
+                Local local = new Local()
+                // llamada al método de la clase    anidada
+                local.run();
+            }   
+            // método main de la clase contenedora
+            public static void main(String[] args)
+            {   
+                // instacia de la clase contenedora
+                Outer outer = new Outer();
+                // llamada al método run() de la    clase contenedora
+                outer.run();
+            }
+        }
+        ```
+    
+    + Anonymous Inner Classes
+
+        Son clases que nos permiten instanciar clases abstracta implementando los métodos abstractos de la clase abstracta al mismo tiempo en el que instanciamos el objeto.
+
+        ```java
+        // Abstracta.java
+        //clase abstracta
+        public abstract Abstracta {
+         public abstract void run();
+        }
+        // Anonima.java
+        public class Outer {
+            public void ejecutar() {
+            // instanciando clase anónima
+            Abstracta abstracta = new Abstracta() {
+                void run() {
+                    // implementación
+                }
+            }
+            // llamando método de la clase anónima
+            abstracta.run();
+            }
+        }  
+        ```
+
+# Enumeration {#enum}
+
+Un enumerado o (Enum) es una clase “especial” que limitan la creación de objetos a los explícitamente en la implementación de la clase. La única limitación que tienen los enumerados respecto a una clase normal es que este debe ser privado para que no se puedan crear nuevos objetos.
+
+```java
+public enum Day {
+    // cosntructores según la constante elegida
+    SUNDAY("Domingo"),
+    MONDAY("Lunes"),
+    TUESDAY("Martes"),
+    WEDNESDAY("Miercoles"),
+    THURSDAY("Jueves"),
+    FRIDAY("Viernes"),
+    SATURDAY("Sabado")
+    // atributo de la clase Day
+    private String spanish;
+    // constructor de la clase Day
+    private Day(String s) {
+        spanish = s;
+    }
+    // método de la clase Day
+    public String getSpanish() {
+        return spanish;
+    }
+}
+
+System.out.println(Day.Friday); // imprime Friday
+System.out.println(Day.Monday.getSpanish(); // imprime Lunes
+```
+
+# Interfaces {#interfacesA}
+
+Solo se pueden componer de métodos sin implementación y constantes. Por lo mismo no se puende instanciar una interfaz.
+
+Apartir de java 8 se pueden implementar métodos con modificador de acceso default y desde java 9 pueden implementarse métodos con el modificador de acceso private.
+
+```java
+public interface MyInterface {
+    default void defaultMethod() {
+        privateMethod("Hola Mundo desde el default");
+    private void privateMethod(String s) {
+        System.out.println(s);
+    void commonInterfaceMethod();
+```
+
+Los métodos privados no solo podran ser accedidos desde la misma interfaz en el ejemplo se hace a través del metodo default.
+
+## Data Access Object (DAO){#DAO}
+
+Es un patron de diseño orientado a interfaces en donde la interfaz implementa los metodos CRUD.
+
+# Interfaces vs Clases Abstractas {#vs}
+
+Ambas tienen las mismas capacidades en cuestion de implementación, pero las clases abstractas se ven limitadas por la herencia.
+
+Las interfaces son mucho mas flexibles y pueden ser ocupadas por cualquier clase y pueden implemnetarse más de una interfaz.
+
+Se recomiendo programar orientado a interfaces.
+
+# Manejo de Errores {#errores}
+
+Todo error que pueda ocurrir en Java se genera un mensaje Throwable.
+
+## Clasificación {#errorclas}
+
++ Throwable
+    - Error: son errores que ocurren en la JVM y son ajenas al programador
+    - Exception: son los errores que son previsibles y manipulables por el programador
+        * Runtime: solo son visibles durante la ejeccución.
+        * Otras: son todas las excepciones que pueden surgir por la interacción con un componente externo.
+
+## Manejo {#manejo}
+
+El manejo de errores ocnsiste en añadir un bloque de código para definir el comportamiento de la aplicación cuando ocurra un error.
+
+### Try-catch-finally {#try-catch}
+
+```java
+try{
+    // código vulnerable que puede lanzar excepciones del tipo 1 o 2
+} catch (ExceptionType1 name) {
+    // código que se ejecutará si se lanza una excepción del tipo 1
+} catch (ExceptionType2 name) {
+    // código que se ejecutará si se lanza una excepción del tipo 2
+} finally {
+    // código que siempre se ejecuta
+}
+```
+
+### Try-with-resources {#resources}
+
+```java
+BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+try(reader) {
+    // código que puede lanzar excepciones
+} catch (Exception e) {
+    // manejo de errores
+}
+```
+El try-with-resources se encarcaga de cerrar el recurso del try, asi nos evita tener que escribir el bloque finally y los try-catch anidados correspondientes.

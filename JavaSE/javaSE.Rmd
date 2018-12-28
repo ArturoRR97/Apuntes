@@ -20,7 +20,7 @@ documentclass: report
 mainfont: Hack
 pagesize: letter
 urlcolor: blue
-secnumdepth: 2
+toccolor: violet
 
 ---
 
@@ -483,3 +483,9 @@ for (int i : arreglo){
 }
 ```
 El ciclo foreach lo que nos ofrece es una herramienta para iterar sobre objetos de una manera mas sencilla y eficiente.
+
+# Modificadores de Acceso {#acceso}
+
+```{r modificadores, out.width='75%', fig.align='center', fig.cap='Modificadores de acceso', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/modificadores.png')
+```
