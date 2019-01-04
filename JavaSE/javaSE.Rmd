@@ -489,3 +489,37 @@ El ciclo foreach lo que nos ofrece es una herramienta para iterar sobre objetos 
 ```{r modificadores, out.width='75%', fig.align='center', fig.cap='Modificadores de acceso', fig.pos='H', echo=FALSE}
 knitr::include_graphics('images/modificadores.png')
 ```
+
+# Colecciones de datos {#collections}
+
+Se diferencian de los arreglos pues su tamaño no es fijo.
+
+Tienenn operaciones para añadir, eliminar, obtener, encontrar o recorrer.
+
+Todas las colecciones se encuentran en el paquete **java.utils**, se utiliza para almacenar colecciones de objetos, no se pueden coleccionar datos primitivos.
+
+## Estructura o Familia {#Familia}
+
+```{r collections, out.width='75%', fig.align='center', fig.cap='Arbol de implementación y herencia', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/collections.png')
+```
+
+## Miembros {#miembros}
+
++ **List** : Los elementos se van a encontrar ordenados y pueden repetirse. **Interfaz**.
+
+    - **add(Object a)** : añade un objeto al final de la lista.
+    - **add(índice i, Object a)** : añade un objeto en el índice i de la lista.
+    - **get(índice i)** : devuelve el objeto en el índice i de la lista.
+    - **remove(índice i)** : elimina el objeto en el índice i de la lista.
+    - **clear()** : Vacía la lista.
+    - **indecxOf(Object o)** : devuelve el índice de la primera coincidencia, de no encontrar el objeto devuelve -1.
+    - **lastIndexOf(Object o)** : devuelve el índice de la última ocurrencia del objeto en la lista, de no encontrar el objeto devuelve -1.
+    - **size()** : devuelve el numero de elementos de la lista.
+    - **contains(Object o)** : devuelve un booleano dependiendo si existe el objeto en la lista o no.
+
++ **ArrayList** : es un arreglo de objetos de tamaño dinámico. **Clase**.
+
++ **Vector** : es similar a un ArrayList, la diferencia es que utiliza hilos y esta sincronizado. **Clase**.
+
++ **Set** : Los elemnetos pueden o no estar ordenados y cada elemento es único.**Interfaz**.

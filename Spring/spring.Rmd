@@ -1,0 +1,95 @@
+---
+title: "Java SE: Spring"
+subtitle: "Curso de Hibernate y Java Spring"
+author: ["Arturo Rivas Rojas"]
+date: \today
+output:
+    pdf_document:
+        latex_engine: lualatex
+        toc: true
+        toc_depth: 3
+        number_sections: true
+        keep_tex: false
+        extra_dependencies:
+            - float
+            - caption
+        includes:
+            in_header: ~/templates/poli.sty
+fontsize: 14pt
+documentclass: report
+mainfont: Hack
+pagesize: letter
+urlcolor: blue
+toccolor: violet
+
+---
+
+# Aplicación Empresarial {#empresarial}
+
+Es una aplicación conformada por 3 componentes:
+
++ La empresa.
++ Los requerimientos no funcionales. Intervienen los procesos y las personas.
++ Conjunto de elementos articulados que resuleven un problema.
+
+Se construyen de manera modular, para solventar los problemas del usuario. Y se hace uso de la Interoperabilidad de diversos lenguajes y tecnologias.
+
+Hay dos enfoques para crear aplicaciones empresariales.
+
++ Aplicaciones hechas a medida, resolver un problema específico.
++ Aplicaciones multitarget.
+
+## Características {#empcara}
+
++ **Usuario concurrentes** : gran cantidad de usuarios conectados a la vez.
++ **24/7** : Soporte todo el año.
++ **Respaldo y Seguridad de la información**.
+
+# Aplicación Web {#web}
+
+Las aplicaciones web estan compuestas por 3 capas o elementos:
+
++ El cliente
++ EL servidor
++ La base de datos
+
+## Ventajas {#ventajasweb}
+
++ Facil Instalación y actualización.
++ Ahorro de recursos en equipos y dispositivos.
++ Compatibilidad multiplataforma.
++ Soporte a multiples usuarios concurrentes.
++ Acceso multidispositivo.
+
+# Servidor Web {#webserver}
+
+Los servidores web tienen un **Contenedor web** que es el que gestiona los servlets, JSP, JSF, etc. Entre los servidores web estan Tomcat, Jetty, GlassFish web y Payara web.
+
+# Servidor de Aplicación {#appserver}
+
+Los servidores de aplicación ademas de tener el **Contenedor web** tienen el **Contenedor negocio** que es el que se encarga de las tecnologías EJB(Enterprise Java Beans).
+
+Algunos servidores de aplicación son JBoss, WhatFly, GlassFish full y Payara full.
+
+# Patrón de Diseño MVC {#MVC}
+
+M.V.C. -> Modelo Vista Controlador, es el standard en la construcción de aplicaciones web.
+
++ **Modelo** : Todas las clases que se involucran con la BD.
++ **Negocio** : Todas las clases donde se encuentra la lógica y se cumplen los requerimientos funcionales.
++ **Vista** : Todas las clases, archivos relacionados con la Interfaz del Usuario.
+
+Este patrón de diseño nos permite actualizar o cambiar las capas de manera independiente sin afectar a las otras. Facilitando la mantenibilidad.
+
+# Servlets {#servlets}
+
+Son componentes del lado del server, que permiten procesar las peticiones (request) y responder a ellas (response) generando contenido dinámico o redireccionar a otros recursos.
+
+## Tipos {#tiposservlet}
+
++ **HttpServlet (HTTP)** : Es el mas usado y se encuentra en el paquete javax.servlet.http.
+    - Utiliza los métodos GET y POST
++ **GenericServlet (Otros Protocolos)** : son servlets que nos permiten utilizar cualquier protocolo y se encuentra en el paquete javax.servlet
+    - Utiliza el método service
+
+Configuaración a traves de anotaciones ya no es necesario hacerlo en XML.

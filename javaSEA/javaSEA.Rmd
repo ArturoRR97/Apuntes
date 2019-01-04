@@ -299,3 +299,224 @@ try(reader) {
 }
 ```
 El try-with-resources se encarcaga de cerrar el recurso del try, asi nos evita tener que escribir el bloque finally y los try-catch anidados correspondientes.
+
+# Java Data Base Connectivity (JDBC) {#jdbc}
+
+Es un conjunto de API para conexiones con la base de datos.
+
+Cada Motor de Base de Datos necesita una biblioteca jar distinta que llamada JDBC driver.
+
+## Componentes {#componentes}
+
++ **DriverManager** nos permite generar el objeto para conectar con la base de datos.
+
++ **Connection** nos genera una sesion durante la conexion a la base de datos.
+
++ **Statement** nos ayuda a generar las consultas.
+
++ **PreparedStatement** se diferencia de statement pues puede recibir paramentros para la clausula WHERE.
+
++ **ResultSet** es un interfaz para manipular los datos obtenidos de la base de datos. Manejando cada columna como un objeto.
+
+## Metodos CRUD {#MCRUD}
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Método & Devuelve & Uso\\
+\hline
+\hline
+\textbf{executeQuery}(String sqlString) & Considencias \textbf{ResulSet} & Consultas \textbf{SELECT}\\
+\hline
+\textbf{executeUpdate}(String sqlString) & Filas afectadas \textbf{int} & Modificaciónes \textbf{INSERT,UPDATE, DELETE, o DDL}\\
+\hline
+\textbf{execute}(String sqlString) & \textbf{boolean} & Cualquioper comando\\
+\hline
+\end{tabular}
+\captionof{table}{Métodos CRUD}
+\label{crudexecute}
+\end{center}
+
+## Ejemplos {#ejemplosJDBC}
+
++ Conexión a BD de mysql
+
+```java
+// paquete de la interfaz
+package interfaces;
+// clases que ocupamos importar
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public interface DBConnection {
+    // metodo que podemos llamar desde cualquier clase que iplemnete a la interfaz DBConection
+	default Connection conectar() {
+		Connection conexion = null;
+		try {
+            // importar clase mediante el nombre.
+			Class.forName("com.mysql.jdbc.Driver");
+            //jdbc:MotorBD:dirección y puerto/BD, user, password
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tt","root","root");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return conexion;
+	}
+}
+```
+
++ Consulta a la BD
+
+```java
+String titulo;
+// try-with-resources con la conexion por si hay alguna excepción atraparla y cerrar la conexión al finalizar
+try(Connection conexion = conectar()) {
+    // Query que queremos ejecutar
+    String query = "SELECT * from tt" +
+    "WHERE titulo = ?" + // cada '?' sera un parametro en el preparedStatement que podemos modificar con los metodos set.
+    "AND autor = ?";
+    // Cargamos el query
+    PreparedStatement preparedStatement = conexion.preparedStatement(query);
+    // Definimos los paramateros es decir los '?'
+    preparedStatement.setString(1,"Inteligencia Artificial"); // la numeración inicia desde el 1
+    preparedStatement.setString(2,"Juan Pérez");
+    // ejecutamos el query y guardamos la respuesta
+    ResultSet consulta = preparedStatement.executeQuery();
+    // Mientras haya un siguiente resultado
+    while(consulta.next()) {
+        // guardamos el valor de la columan "titulo" en una string.
+        titulo = consulta.getString("titulo");
+        System.out.println("")
+    }
+}
+```
+
++ Modificaciónes a la BD
+
+```java
+// try-with-resources con la conexion por si hay alguna excepción atraparla y cerrar la conexión al finalizar
+try(Connection conexion = conectar()) {
+    // objeto Statement que executara el query
+    Statement statement = conexion.creatStatement();
+    // Query que queremos ejecutar
+    String query = "INSERT INTO tt(" + titulo + ", " + autor + ", " + sinodales");";
+    // si se ingresaron 1 o mas registros
+    if(statement.executeUpdate(query)>0) {
+        Se imprime el mensaje
+        System.out.println("registro exitoso.")
+    }
+}
+```
+
+# Interfaces Funcionales {#interFun}
+
+Consiste en un único método abstracto SAM (Single Abstract Method), su anotación es @FuntionalInterface.
+
+Ejemplo:
+
+```java
+@FuntionalInterface
+public interface Greeting {
+    public void perform();
+}
+```
+
+# Programación Funcional {#funcional}
+
+Paradigma de programación funcional, un paradigma son uan seria de normas que un lenguaje se ajusta para dar solución a un problema.
+
+## Clasifiación de paradigmas {#clasificacionp}
+
++ Programación
+    - Imperativa : Se enfoca en el "Cómo" se quiere lograr.
+        * Estructurada : Basic
+        * Procedimental : Go , C
+        * OOP : Java , PHP
+    - Declarativa : Se basa en el "Qué" se quiere lograr.
+        * Funcional : Haskell , Elixir, Scala, Erlang
+        * Lógico : Lisp , Prolog.
+
+## Funciones de orden superior {#superior}
+
+Una función es una operación que recibe un dato lo procesa y retorna otro data. Pero para distinguir a la programación funcional es porque existen **funciones de orden superior**, funciones que reciben y retornan funciones.
+
+# Lambdas {#lambdas}
+
+El formato de una lambda en Java y en la mayoria de los lenguaje es el siguiente:
+
+```java
+(parámetros)->{cuerpo-lambda}
+```
+
+Una lambda se debe utilizar cuando hay fragmentos de código con tiempos de vida muy cortos. Encapsulan código especifico.
+
+Para implementar una Lambda es necesario el uso de una \hyperref[interFun]{Interfaz funcional} o **clases anónimas**.
+
+## Implementación {#ejemplosLambdas}
+
+```java
+// HolaMundoInterfaz.java
+@FuntionalInterface
+public interface HolaMundoInterfaz {
+    public void holaMundo(String nombre);
+}
+// HolaMundoClase.java
+public class HolaMundoClase {
+    public static void main(String[] args) {
+        // Hacemos una instacia de la interfaz y utilizando una lambda definimos el método SAM de la interfaz funcional.
+        HolaMundoInterfaz objetoHolaMundo = (String nombre) -> {
+            System.out.println("Hola Mundo" + nombre);
+        };
+        // utilizamos el metodo que acabamos de definir
+        objetoHolaMundo.imprimir("Arturo"); // imprime "Hola Mundo Arturo"
+    }
+}
+```
+
+## Como variables {#variables}
+
+Retomando el ejemplo anterior vemos que podemos ver que se puede simplificar aun mas la delcaraciond de una lambda.
+
+```java
+HolaMundoInterfaz objetoHolaMundo = nombre -> System.out.println("Hola Mundo" + nombre);
+```
+
+## Recursividad {#recursividad}
+
+La programación funcional no utiliza iteraciones (for o whiles) si no que se basa en la recursividad. Por lo tanto en las lambdas no hay bucles.
+
+El metodo colección.**forEach(lambda)** de las colecciones de datos trabaja de manera recursiva. Seria el equivalente de un map en haskell.
+
+```java
+ArrayList<Film> = new ArrayList();
+films.forEach(f -> System.out.println(f.toString()));
+// estas dos lineas hacen exactamente lo mismo
+films.forEach(System.out::println);
+```
+
+El metodo colección.**stream()** es un metodo  que habilita a  las colecciones trabajar con lambdas. Y colección.stream().**filter(lambda)** es un metodo que nos permite filtrar una colección según una lambda. El metodo **filter()** retorno un **stream()** por lo que se pueden concatenar multiples **filter()**.
+
+```java
+// declaramos una lista que es una colección
+List<String> lista = Arrays.asList("Hola","Mundo","","?");
+// filtramos la lista ignorando las cadenas vacias. E imprimimos la lista resultante
+lista.stream().filter(f -> !f.isEmpty()).forEach(System.out::println);
+// imprime "Hola\n" "Mundo\n" "?\n"
+```
+
+## Interfaces Predicate y Consumer {#interfaceslambda}
+
+```java
+// declaración del predicado
+Predicate<clase> predicado =  l -> ...;
+// filtramos por el predicado
+lista.stream().filter(predicado);
+// declaramos un consumidor
+Consumer<clase> consumidor =  l -> ...;
+// se realiza por cada elemento de la lista el consumidor.
+lista.forEach(consumidor);
+```
+
+La interfaz **Predicate** nos permite generar los predicados del método **filter()** de manera separada y así tener un código mas legible.
+
+La interfaz **Consumer** nos permite generar operaciones para el método **forEach()** mas complejos.
