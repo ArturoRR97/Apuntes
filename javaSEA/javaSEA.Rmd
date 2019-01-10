@@ -485,7 +485,7 @@ HolaMundoInterfaz objetoHolaMundo = nombre -> System.out.println("Hola Mundo" + 
 
 La programación funcional no utiliza iteraciones (for o whiles) si no que se basa en la recursividad. Por lo tanto en las lambdas no hay bucles.
 
-El metodo colección.**forEach(lambda)** de las colecciones de datos trabaja de manera recursiva. Seria el equivalente de un map en haskell.
+El metodo colección.**forEach(lambda)** de las colecciones de datos trabaja de manera recursiva.
 
 ```java
 ArrayList<Film> = new ArrayList();
@@ -496,6 +496,14 @@ films.forEach(System.out::println);
 
 El metodo colección.**stream()** es un metodo  que habilita a  las colecciones trabajar con lambdas. Y colección.stream().**filter(lambda)** es un metodo que nos permite filtrar una colección según una lambda. El metodo **filter()** retorno un **stream()** por lo que se pueden concatenar multiples **filter()**.
 
+Eexisten los siguientes metodos para trabajar con streams:
+
++ **filter(x -> boolean)** : para filtrar y devuelve un stream.
++ **map(x-> return x*y)** : para transformar y devuelve un stream.
++ **collect(Collectors.toList())** : devuelve una colección con los elementos del stream.
++ **min()** y **max()** Puede recibir un Comparetor.comparing() como parametro y regresa una instacia de un objeto con el metodo get().
++ **count()** : obtiene el tamaño del stream en un long.
++ **reduce((acc,x)->acc + "" + x)** : seria el equivalente de un fold en haskell. funciona como un acumulador y retorna un único valor.
 ```java
 // declaramos una lista que es una colección
 List<String> lista = Arrays.asList("Hola","Mundo","","?");
