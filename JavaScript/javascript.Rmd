@@ -63,7 +63,7 @@ A este tipo de variable se le puede aplicar.
 + **toLowerCase()** : a minusculas
 + **length** : obtener tamaño
 + **charAt(index)** : retorna el caracter en la posición **index**
-
++ **substr(inicio,fin)** : retorna la subcadena del indce **inicio** al indice **fin**.
 
 ### Concatenación {#concat}
 
@@ -84,3 +84,5 @@ var resultado = 2+2
 var operacion = `${suma} ${resultado}`
 console.log(operacion)
 ```
+
+## Numeros {#numeros}
