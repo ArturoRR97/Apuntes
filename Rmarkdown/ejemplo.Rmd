@@ -36,6 +36,3 @@ knitr::include_graphics('images/hola.png')
 ```
 ```{r, child='hola.Rmd'}
 ```
-
-
-

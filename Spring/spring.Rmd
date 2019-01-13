@@ -657,11 +657,117 @@ Si un método transaccional realiza multiples operaciones y una de ellas falla y
 
 # Servicios Web {#webservices}
 
+Son aplicaciones construidas para poder intercambiar información con otras aplicaciones, interoperabilidad.
+
+Existen dos maneras de construir servicios web: SOAP y REST.
+
+Su principal diferencia es que mientras **SOAP** utiliza XML y **REST** usa JSON
+
+## Spring REST {#srest}
+
+Es una parte de Spring MVC Que nos permite construir servicios web en Spring utilizando la arquitectura REST.
+
+Para configurar un servicio web se utiliza la anotación **@RestController** en la clase Base, la cual combina los comportamientos de las anotaciones @Controller y @ResponseBody.
+
+Para que un servicio web pueda recibir peticiones y este disponible en un URL, se utiliza la anotación **@RequestMapping("URL")**.
+
+Ejemplo de implementación base:
+
+```java
+package com.platzi.ereservation.vista_resource;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * Clase que representa el servicio web de cliente
+ * @author arturo
+ *
+ */
+@RestController
+@RequestMapping("/api/cliente")
+public class ClienteResource {
+}
+```
+
+## Implementación de Operaciones REST {#irest}
+
+Las operaciones un servidor web utilizan servicios de la aplización.
+
+Debido a que los Objetos JPA no pueden utilizarse en el intercambio de información se crea un objeto virtual con la misma infromación pero si anotaciones ni relaciones. Esto se hace para que se compatible con cualquier tecnologia y pueda representarse en JSON.
+
+Los principales metodos de un servicio web son GET, POST, PUT y DELETE.
+
+### POST {#rpost}
+
+Para impelmentar un método de creación se utiliza la anotación **@PostMapping**.
+
+```java
+@PostMapping
+public ResponseEntity<Cliente> creatCliente(@RequestBody ClienteVO clienteVO) {
+	Cliente cliente = new Cliente();
+	cliente.setNombreCli(clienteVO.getNombreCli());
+	cliente.setApellidoCli(clienteVO.getApellidoCli());
+	cliente.setDireccionCli(clienteVO.getDireccionCli());
+	cliente.setTelefonoCli(clienteVO.getTelefonoCli());
+	cliente.setEmailCli(clienteVO.getEmailCli());
+	return new ResponseEntity<>(clienteService.create(cliente), HttpStatus.CREATED);
+}
+```
+### PUT {#rput}
+
+Para implementar un metodo de actualización se utiliza la anotación **@PutMapping**.
+
+```java
+@PutMapping("/{identifiación}")
+public ResponseEntity<Cliente> updateCliente(@PathVariable("identifiacion") String identificacion,
+		ClienteVO clienteVO) {
+	Cliente cliente = clienteService.findByIdentificacion(identificacion);
+	if (cliente == null) {
+		return new ResponseEntity<Cliente>(HttpStatus.NOT_FOUND);
+	} else {
+		cliente.setNombreCli(clienteVO.getNombreCli());
+		cliente.setApellidoCli(clienteVO.getApellidoCli());
+		cliente.setDireccionCli(clienteVO.getDireccionCli());
+		cliente.setTelefonoCli(clienteVO.getTelefonoCli());
+		cliente.setEmailCli(clienteVO.getEmailCli());
+		return new ResponseEntity<>(clienteService.update(cliente), HttpStatus.OK);
+	}
+}
+```
+
+### DELETE {#rdelete}
+
+Para implementar un metodo de eliminación se utiliza la anotación **@DeleteMapping**.
+
+```java
+@DeleteMapping("/{identificacion}")
+public void removeCliente(@PathVariable("identificacion") String identificacion) {
+	Cliente cliente = clienteService.findByIdentificacion(identificacion);
+	if(cliente != null) {
+		clienteService.delete(cliente);
+	}
+}
+```
+
+### GET {#rget}
+
+Para implementar un metodo de consulta se utiliza la anotación **@GetMapping**.
+
+```java
+@GetMapping
+public ResponseEntity<List<Cliente>> findAll(){
+	return ResponseEntity.ok(clienteService.findAll());
+}
+```
+
 ## Swagger {#swager}
 
 Es una herramienta para documentar API's Web de manera interactiva.
 
 Esto facilita el consumo o exponer servicios web para integrace con aplizaciones de terceros.
+
+### Configuración {#swconfig}
 
 Para utilizarlo con Spring se utiliza el  Spring Fox por lo que seben agregar sus dependencias.
 
@@ -693,4 +799,175 @@ public class SwaggerConfiguration {
 		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.withClassAnnotation(RestController.class)).paths(PathSelectors.any()).build();
 	}
 }
+```
+
+### Documentar {#swdocumentar}
+
+Una vez configurado Swagger en la clase del servidor web agregaremos anotaciones para documentar.
+
+Las principales anotaciones son las siguientes:
+
++ **@Api**(tags = "nombre del servicio") : además de definir que se documentará con swagge la clase, nos permite asignarle un nombre o etiqueta.
+
++ **@ApiOperation**(value = "nombre del metodo", note = "descripción") : sirve para documentar un método.
+
++ **@ApiResponse**(code = [201,404,...], messa)ge = "Mensaje") : Documenta la respuesta del servidor a un código.
+
++ **@ApiResponses**(value = {@ApiResponse(...),@ApiResponse(...)}) : permite documentar multiples respuestas a distintos códigos.
+
+Para mas información consultar https://github.com/swagger-api/swagger-core/wiki/annotations
+
+Ejemplo:
+
+```java
+package com.platzi.ereservation.vista_resource;
+
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.platzi.ereservation.modelo.Cliente;
+import com.platzi.ereservation.negocio_service.ClienteService;
+import com.platzi.ereservation.vista_resource.vo.ClienteVO;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
+/**
+ * Clase que representa el servicio web de cliente
+ * 
+ * @author arturo
+ *
+ */
+@RestController
+@RequestMapping("/api/cliente")
+@Api(tags = "cliente")
+public class ClienteResource {
+
+	private final ClienteService clienteService;
+
+	public ClienteResource(ClienteService clienteService) {
+		this.clienteService = clienteService;
+	}
+
+	/**
+	 * Método de servicio para crear de un cliente
+	 * 
+	 * @param clienteVO
+	 * @return
+	 */
+	@PostMapping
+	@ApiOperation(value = "Crear Cliente", notes = "Servico para crear un nuevo cliente")
+	@ApiResponses(value = {@ApiResponse(code = 201, message = "Cliente creado correctamente"),@ApiResponse(code = 400, message = "Solicitud inválida")})
+	public ResponseEntity<Cliente> creatCliente(@RequestBody ClienteVO clienteVO) {
+		Cliente cliente = new Cliente();
+		cliente.setNombreCli(clienteVO.getNombreCli());
+		cliente.setApellidoCli(clienteVO.getApellidoCli());
+		cliente.setDireccionCli(clienteVO.getDireccionCli());
+		cliente.setTelefonoCli(clienteVO.getTelefonoCli());
+		cliente.setEmailCli(clienteVO.getEmailCli());
+		return new ResponseEntity<>(clienteService.create(cliente), HttpStatus.CREATED);
+	}
+
+	/**
+	 * Método del servicio para actualizar de un cliente
+	 * 
+	 * @param identificacion
+	 * @return
+	 */
+	@PutMapping("/{identifiación}")
+	@ApiOperation(value = "Actualizar Cliente", notes = "Servico para actualizar un nuevo cliente")
+	@ApiResponses(value = {@ApiResponse(code = 201, message = "Cliente actualizado correctamente"),@ApiResponse(code = 404, message = "Cliente no encontrado")})
+public ResponseEntity<Cliente> updateCliente(@PathVariable("identifiacion") String identificacion,
+			ClienteVO clienteVO) {
+		Cliente cliente = clienteService.findByIdentificacion(identificacion);
+		if (cliente == null) {
+			return new ResponseEntity<Cliente>(HttpStatus.NOT_FOUND);
+		} else {
+			cliente.setNombreCli(clienteVO.getNombreCli());
+			cliente.setApellidoCli(clienteVO.getApellidoCli());
+			cliente.setDireccionCli(clienteVO.getDireccionCli());
+			cliente.setTelefonoCli(clienteVO.getTelefonoCli());
+			cliente.setEmailCli(clienteVO.getEmailCli());
+			return new ResponseEntity<>(clienteService.update(cliente), HttpStatus.OK);
+		}
+
+	}
+	
+	/**
+	 * Método de servicio para eliminar un cliente
+	 * @param identificacion
+	 */
+	@DeleteMapping("/{identificacion}")
+	@ApiOperation(value = "Eliminar Cliente", notes = "Servico para Eliminar un nuevo cliente")
+	@ApiResponses(value = {@ApiResponse(code = 201, message = "Cliente Eliminado correctamente"),@ApiResponse(code = 404, message = "Cliente no encontrado")})
+	public void removeCliente(@PathVariable("identificacion") String identificacion) {
+		Cliente cliente = clienteService.findByIdentificacion(identificacion);
+		if(cliente != null) {
+			clienteService.delete(cliente);
+		}
+	}
+	
+	@GetMapping
+	@ApiOperation(value = "Listar Clientes", notes = "Servico para listar todos los clientes")
+	@ApiResponses(value = {@ApiResponse(code = 201, message = "Clientes encontrados"),@ApiResponse(code = 404, message = "Clietne nos encontrados")})
+public ResponseEntity<List<Cliente>> findAll(){
+		return ResponseEntity.ok(clienteService.findAll());
+	}
+	
+}
+```
+
+### Documentación Generada(cliente liviano) {#clientedoc}
+
+La documentación que genra swagger es interactiva y nos permite probar los servicios web.
+
+```{r inicioSwagger, out.width='75%', fig.align='center', fig.cap='Pagina de inicio de la documentación', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/inicioSwagger.png')
+```
+
+```{r clienteligero, out.width='75%', fig.align='center', fig.cap='Cliente Swagger', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/clienteligero.png')
+```
+
+# Seguridad Web {#wseguridad}
+
++ **Filtros de Autenticación y Manejo de la Autorización** : URLs y contenido al que los usuarios pueden acceder o no dependiendo de sus permisos.
++ **Control de Páginas de Error** : configuración de la respuesta que entregamos ante errores tipo 500, 404, entre otros.
++ **Envío de peticiones seguras**
+
+## OWASP {#OWASP}
+
+Es un estandar para codificar de forma segura.
+
+## Spring Security
+
+Ss un framework de Spring que permite gestionar la seguridad en varios niveles. Soporta multiples modelos de autentificación (HTTPBasic,LDAP,OAuth,Http Diget,etc).
+
+### Configuración {#securityconfig}
+
+Se debe agregar al archiv pom.xml la dependencia de security. 
+Luego se debe excluir la configuración que viente por defecto y crear una propia.
+
+```{r excluir, out.width='75%', fig.align='center', fig.cap='excluyendo la configuración por default', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/excluir.png')
+```
+```{r securityClass, out.width='75%', fig.align='center', fig.cap='Clase para la configuración de seguridad', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/securityClass.png')
+```
+Y posteriormente configurar las credenciales del usuario en el archivo application.properties.
+
+```{r credenciales, out.width='75%', fig.align='center', fig.cap='Configuración de credenciales del usuario', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/credenciales.png')
 ```
