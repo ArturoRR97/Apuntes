@@ -50,6 +50,13 @@ nombre = 'Arturo'
 ```{r valor, out.width='75%', fig.align='center', fig.cap='valor de la variable', fig.pos='H', echo=FALSE}
 knitr::include_graphics('images/valor.png')
 ```
+## Constantes {#const}
+
+Son variables inmutables, se declaran con la palabra reservada **const** y por convención se nombrean en mayusculas.
+
+```js
+const MAYORIA_DE_EDAD = 18
+```
 
 ## Punto y coma {#semicolon}
 
@@ -86,3 +93,146 @@ console.log(operacion)
 ```
 
 ## Numeros {#numeros}
+
+El objeto **Math** nos ofrece multiples constantes y métodos que se peuden consultar [aqui](https://www.w3schools.com/jsref/jsref_obj_math.asp).
+
+Tambien tenemos formas para castearo de numeros flotantes a cadenas y de cadenas a flotantes.
+
++ numero**.toFixed(decimales)** : método de un numero float para castearlo a string con la cantidad de decimales definida.
+
++ **parseFloat(string)** : función que recibe una string y lo vuelve un float.
+
+## Funciones {#function}
+
+Las funciones son blockes de código reutilizable. Una función se declara con la palabra reservada function.
+
+```js
+function nombreDeLaFunción(param1, param2,...,pramn) {
+    //Cuerpo de la función
+}
+```
+Las funciones reciben los parametros por copia(objetos por referencia), evitando asi que haya efectos secundarios.
+
+Las funciones priorizan las variables locales y los parametros sobre las variables globales.
+
+### Arrow fuction {#arrow}
+
+En js se puede asignar funciones a una variables y se les conoce como funciones anonimas.
+
+```js
+var mayorDeEdad = function (perosna) {
+    return persona.edad >= MAYORIA_DE_EDAD
+}
+```
+
+se pueden escribir de la siguiente manera:
+
+```js
+var mayorDeEdad = ({edad}) => edad >= MAYORIA_DE_EDAD
+```
+
+Si la función lo unico que contiene es el return se puede omitir junto a las llaves y lo realiza de manera implicita.
+
+## Objetos {#objetos}
+
+Un objeto se compone de atributos que son pares de clave:valor separados por comas.
+
+```js
+var persona = {
+    nombre: 'Arturo',
+    apellido: 'Rivas',
+    edad: 21
+}
+// se pueden consultar los artributos de un objeto utilizando "."
+console.log(persona.nombre)
+```
+Los objetos pueden definirse como parametros de una función. Y tambien se puede descomponer el objeto y solo especificar el atributo de interes.
+
+Retomando el objeto persona.
+
+```js
+function imprimirNombreEnMayusculas({ nombre }) {
+    console.log(nombre.toUpperCase())
+}
+```
+
+### destructuración {#objdes}
+
+Es una técnica o forma de extraer los datos de un objeto.
+
+```js
+function imprimirPersona(persona) {
+    var {nombre} = persona// nombre = persona.nombre
+    console.log(nombre)
+}
+```
+
+### copia {#copia}
+
+Se puede generar un nuevo objeto apartir de uno ya existente
+
+```js
+function cumpleanos(persona) {
+    return {
+        ...persona,//copia todos los atributos de persona.
+        edad = pesona.edad + 1,//modificamos el atributo edad
+        ciudad = 'Mexico'// agregar un nuevo atributo
+    }
+}
+```
+
+## Primitivos {#Primitivos}
+
+Existen cinco tipos de datos que son primitivos:
+
++ Boolean
++ Null
++ Undefined
++ Number
++ String
+
+## Comparación {#comparacion}
+
+Para comparar datos primitivos js tiene 2 operadores:
+
++ **==** : convirte ambas variables al mismo tipo de datos para poderlo comparar. Negación **!=**.
+
+    ```js
+    var x = 4, y = '4'
+    console.log(x==y)// true
+    ```
++ **===** : igualdad estricta,no compara los tipos de variables distintos. Negación **!==**.
+
+    ```js
+    var x = 4, y = '4'
+    console.log(x===y)// false
+    ```
+
+### Condicionales {#con}
+
++ **>** : mayor que.
++ **>=** : mayor o igual que.
++ **<** : menor que.
++ **<=** : menor o igual que.
+
+# Estructuras de Control {#control}
+
+## Condicional {#if}
+
+La estructura **if** funciona utilizando booleans si la condición es **true** se ejecuta el código dentor de este. Y si la condición fue false se ejecuta el código del **else**.
+
+```js
+if(condicion){
+    // si la condición se cumple
+} else {
+    // en otro caso
+}
+```
+
+## Estructuras Repetitivas {#loops}
+
+### For {#for}
+
+
+
+### While {#while}
