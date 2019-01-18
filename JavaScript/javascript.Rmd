@@ -186,6 +186,21 @@ arturo.saludar(responder)
 
 En el ejemplo anterior se utilizan \hyperref[clases]{clases} que se explicarán mas adelante. Pero podemos observar como la función saludar tanto en Persona como en desarrollador resive a la función fn y dependiendo si existe es decir que sea distinta de null, la ejecuta.
 
+#### Parametros {#parametros}
+
+Los parametros de una función se deben de pasar en el orden en el que fueron escritos.
+
+A los parametros se le puede asignar un valor por defecto
+
+```js
+function saludar (saludo = 'Hola', nombre) {
+    console.log(`${saludo}, soy ${nombre}`)
+}
+
+saludar(undefined,'Arturo')// Hola, soy Arturo
+saludar('Que onda','Armando')// Que onda?, soy Armando
+```
+
 ### Arrow fuction (Lambda) {#arrow}
 
 En js se puede asignar funciones a una variables y se les conoce como funciones anonimas.
@@ -261,6 +276,18 @@ Existen cinco tipos de datos que son primitivos:
 + Undefined
 + Number
 + String
+
+## Fechas {#dates}
+
+La fechas se manejan con el objeto **Date**.
+
+```js
+// El constructor por defecto retorna el dia de hoy
+hoy = new Date()
+// noche buena de 1990, enero es el mes 0
+nocheBuena1990 = new Date(1990,11,24)
+```
+Las resta puende sumerse y restarse, el resultado devuelto se encontrará en milisegundos
 
 ## Comparación {#comparacion}
 
@@ -803,3 +830,104 @@ La palabra reservada **async** nos permite definir a la función como asincrona 
 # DOM {#dom}
 
 El modelo objeto documento nos permite modificar o crear elementos del html utilizando JS.
+
+# Recursividad {#recursividad}
+
+La recursividad en javascript funciona similar a la forma que funciona en otros lenguajes. Toda función recursiva necesita de un caso base, criterio en el que se detendra la función.
+
+```js
+/* Algoritmo de la división entera
+13 / 4
+
+13 - 4 = 9  |    1
+09 - 4 = 5  |    1
+05 - 4 = 1  |    1
+01 - 4 = -3 |_____+
+            13/4=3
+*/
+function divisionEntera(dividendo, divisor) {
+    if(dividendo<divisor){
+        console.log('base');
+        return 0
+    }
+    console.log('recursividad');
+    return 1 + divisionEntera(dividendo-divisor,divisor)
+
+}
+```
+
+# Memorización {#memory}
+
+La memorización nos permitira ahora procesamiento al no tener que recalcular ciertas operaciones. Esto se utiliza para la programación dinámica.
+
+```js
+/* algoritmo del factorial
+    6! = 6 * 5 * 4 * 3 * 2 * 1
+    12! = 12 * 11 * 10 * 9 * 8 * 7 * 6!
+*/
+
+function factorial(n) {
+// si no existe el objeto this.cahe lo creamos
+    if(!this.cache) {
+        this.cache = {}
+    }
+    debugger
+    // si ya habiamos calculado previamente el factorial de n
+    if(this.cache[n]){
+        // lo retornamos
+        return this.cache[n]
+    }
+    // si n es 1 o 0 retornamos un 1
+    if(n <= 1) {
+        return 1
+    }
+    // en cualquier otro caso  guradamos el resultado en cache[n] y hacemos la llamada recursiva
+    this.cache[n] = n * factorial(n-1)
+    debugger
+    // devolvemos cache[n]
+    return this.cache[n]
+}
+```
+# Closures {#closures}
+
+Son funciones que recuerdan los estados de la cosas cuando fueron invocadas.
+
+```js
+function crearSaludo(finalDeFrase) {
+    return function (nombre) {
+        console.log(`Hola ${nombre} ${finalDeFrase}`)
+    }
+}
+
+const saludoArgentino = crearSaludo('che')
+const saludoMexicano = crearSaludo('güey')
+const saludoColombiano = crearSaludo('parse')
+
+saludoArgentino('Arturo') // Hola Arturo che
+saludoMexicano('Arturo') // Hola Arturo güey
+saludoColombiano('Arturo') // Hola Arturo parse
+```
+```{r closure, out.width='75%', fig.align='center', fig.cap='En esta imagen vemos la salida del código', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/closure.png')
+```
+En este ejemplo tan sencillo vemos el poder de las closures creamos las funciones apartir de otra función, pero estas mantienen el valor de la variable **finlaDeFrase** de manera independiente.
+
+# Contexto {#contexto}
+
+Hay 3 formas para porder definir a quien se refiere **this**.
+
++ método function**.bind(contexto, param1, param2,..., paramN)** : genera una nueva función atada a un nuevo this. y se le pueden enviar parametros.
+    ```js
+    const arturo = {
+        nombre: 'Arturo',
+        apellido: 'Rivas'
+    }
+
+    function saludar() {
+        console.log(`Hola, mi nombre es ${this.nombre}`)
+    }
+
+    const saludarAArturo = saludar.bind(arturo)
+    ```
++ método function**.call(contexto, param1, param2,..., paramN)** : a difenrencia de bind no genera una nueva función sino que la ejecuta.
++ método function**.apply(contexto, [param1, param2,..., paramN])** : es muy similar a call pero los parametros se encuentran dentro de un arreglo.
