@@ -1,0 +1,70 @@
+---
+title: "Bash Shell"
+subtitle: "Programación en bash"
+author: ["Arturo Rivas Rojas"]
+date: \today
+output:
+    pdf_document:
+        latex_engine: lualatex
+        toc: true
+        toc_depth: 3
+        number_sections: true
+        keep_tex: false
+        extra_dependencies:
+            - float
+            - caption
+        includes:
+            in_header: ~/templates/poli.sty
+fontsize: 14pt
+documentclass: report
+mainfont: Hack
+pagesize: letter
+urlcolor: blue
+toccolor: violet
+
+---
+
+# Componentes Linux {#componentes}
+
++ **Kernel** : Es el nucleo del sistema operativo, en el cual se gestionan todos lso recursos de hardware, memoria y perifericos, ademas de ejecutar las aplicaciones.
+
++ **shell** : Es el interprete que permite ejecutar las aplicaciones en un lenguaje de alto nivel y procesarlas en un lenguaje de bajo nivel.
+
++ **aplicaciones** : Son todas las aplicaciones con las que interactuamos directamente.
+
+# Bash Scripting {#scripting}
+
+También conocido como programación en le shell, Se trata de poder ejecutar múltiples comando de manera secuencial para automatizar una tarea en específico.
+
+Los **Scripts** son programas ejecutables por el shell y terminan con la extención **.sh** y todo script debe comenzar con un comentario que le indique al shell que se trata de un script.
+
+```{zsh}
+#! bin/zsh
+echo "Hola mundo"
+```
+Para poder ejctuar un script este debe tener permisos de ejecución. Por lo que debemos utilizar el comando **chmod**.
+
+Para agregar el permiso de ejecución al usuario basta con ejecutar en la terminal:
+
+**chmod +x filename**
+
+# Variables {#variables}
+
+Hay dos grandes clasificaciones de variables.
+
++ variables de **Entorno** : que son variables que son accesibles desde cualquir punto y por cualquier usuario del sistema operativo.
+
++ variables de **Usuario** : su alcance se limita al del programa en el que se ejecuta.
+
+Las variables de entorno se declaran en mayusculas y en el archvio /etc/profile.
+
+Mientras que las variables de usuario se declaran en minusculas en sus respectivos programas.
+
+```{zsh}
+#! bin/zsh
+
+opcion=0
+nombre=Arturo
+
+echo "Opción: $opcion y Nombre: $nombre"
+```

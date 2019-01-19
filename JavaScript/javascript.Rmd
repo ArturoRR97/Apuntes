@@ -68,6 +68,8 @@ const MAYORIA_DE_EDAD = 18
 
 En javascript el uso de ";" es opcional.
 
+
+
 ## String {#string}
 
 A este tipo de variable se le puede aplicar.
