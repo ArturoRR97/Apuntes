@@ -84,3 +84,13 @@ Ejemplos:
 + Comunicación en tiempo real
 + Monitoreo de datos
 + Juegos en Linea
+
+# Instalación {#install}
+
+Para istalar la version mas reciente de node.js se utilisa **nvm** (node version manager). Y una vez istalado el nvm basta con ejecutar el siguiente comando
+
+```zsh
+sudo nvm install --lts
+```
+
+Este comando instalara la version mas reciente con soporte a futuro.
