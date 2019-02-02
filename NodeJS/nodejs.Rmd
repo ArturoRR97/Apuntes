@@ -45,8 +45,8 @@ Es un aplicativo que hace uso de librerías ára procesar y ejecutar código Jav
 
 Node.js utiliza el motor de JavaScript de Google Chrome, V8.
 
-```{r estructura, out.width='75%', fig.align='center', fig.cap='Modelo de capas de Node.js', fig.pos='H', echo=FALSE}
-knitr::include_graphics('images/estructura.png')
+```{r arquitectura, out.width='75%', fig.align='center', fig.cap='Modelo de capas de Node.js', fig.pos='H', echo=FALSE}
+knitr::include_graphics('images/arquitectura.png')
 ```
 
 ## Event Loop {#eventloop}
@@ -94,3 +94,95 @@ sudo nvm install --lts
 ```
 
 Este comando instalara la version mas reciente con soporte a futuro.
+
+# Node Package Manger NPM {#npm}
+
+Es un componente se node que nos permite administrar las dependencias de node, además de inicializar proyectos.
+
+El comando **npm init** nos presentará un formulario para la creación de un nuevo poryeto.
+Cuuando se termine de ejecutar el comando se habra creado un archivo package.json que contine la configuración de nuesto proyecto.
+
+Al estar trabajando con npm el archivo package.json se altera constantemente sin que nos demos cuenta.
+
+**npm ls** listara las dependencias de nuestro proyecto.
+
+**npm install [dependencia]** nos permite instalar nuevas dependencias.
+
+**npm uninstall** remueve dependencias.
+
+# Modulos {#modulos}
+
+Un modulo es un conjunto de funciones que se desean reutilizar en otros programas.
+
+## Locales {#localmodules}
+
+El formato para declarar un modulo local es el siguiente.
+
+```js
+//hello.js
+module.exports = {
+    // declaración de un atributo que contiene una función
+    sayHello: name => `Hello to ${name}`;
+    }
+}
+```
+Para importar un modulo local se hace lo siguiente:
+
+```js
+// alias del modulo = ubicación del modulo la extensión solo es necesaria si existe un archivo con el mismo nombre.
+const hello = require("./hello.js")
+// función declarada en el modulo.
+hello.sayHello('Arturo')
+```
+Si require solo recibe la dirección de un directorio y no de un archivo, este busca dentro de ese directorio un archivo que se llame index con cualquir extensión. 
+
+## Externos {#externmodules}
+
+Una vez que se hayan instalado las dependencias mediante **npm**.
+
+**npm install** nos permite instalar todas las dependencias que esten declaradas en el package.json
+
+El formato para importar modulos externos que ya se instalaron media npm.
+
+```js
+const cowsay = require("cowsay")
+```
+
+La forma en la que se llaman a las funciones es la misma tanto para los modulos locales como externos.
+
+# Modulos Nativos {#nativos}
+
+
+## File System {#archivos}
+
+Es el modulo que nos permite manejar los archivos del sistema.
+
+```js
+const fs = require("js")
+```
+
+### fs.readFile(path[, option], callback) {#fread}
+    
+Es una función que nos permite leer de manera asíncrona el archivo con la ruta **path** y con larespuesta obtenida ejecutar la función**callback** que tiene la forma: 
+    
+**(error, data) => {...}**
+
+```js
+fs.readFile("./src/ejemplo.txt", "utf8", (err, data)=>{
+    if(err) throw err;
+    console.log(data)
+})
+```
+
+El código anterior imprime todo el contenido del archivo ejemplo.txt
+
+### fs.writeFile(path, data[, option], callback) {#fwrite}
+
+Esta función nos permite escribir **data** en el archvivo con la dirección **path** y ejecutar **callback** al terminar la operación.
+
+```js
+fs.writeFile("./resources/incNumber.txt", incValues.join("\n"), (err, data) => {
+    if(err) throw err;
+})
+```
+## Readline {#readline}

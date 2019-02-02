@@ -1,0 +1,51 @@
+---
+title: "JS Funcional"
+subtitle: "utilizando Bedu"
+author: ["Arturo Rivas Rojas"]
+date: \today
+output:
+    pdf_document:
+        latex_engine: lualatex
+        toc: true
+        toc_depth: 3
+        number_sections: true
+        keep_tex: false
+        extra_dependencies:
+            - float
+            - caption
+        includes:
+            in_header: ~/templates/poli.sty
+fontsize: 14pt
+documentclass: report
+mainfont: Hack
+pagesize: letter
+urlcolor: blue
+toccolor: violet
+
+---
+
+# Funciones {#funciones}
+
+Si recordamos las funciones algebraicas por ejemplo:
+
+$$f(x) = 2x$$
+
+Para evaluar uan función basta con remplazar la x por el numero que quisieramos.
+
+En JS se declararia de la siguiente forma:
+
+```js
+// declaración de la función f(x)
+const f = (x) => 2*x
+// evaluación con x = 2
+console.log(f(2))//4
+```
+
+## Funciones Puras {#puras}
+
+Es una función que siempre retorna el mismo valor cuando se ejecuta con los mismos parametros, por lo que es predecible.
+
+
+## Inmutabilidad {#inmutabilidad}
+
+Las Funciones Puras son aquellas que no modifican los argumentos que reciben si no que trabajan con copias de ellos.

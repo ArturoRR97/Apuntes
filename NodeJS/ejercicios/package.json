@@ -1,0 +1,20 @@
+{
+  "name": "ejemplo",
+  "version": "1.0.0",
+  "description": "experimentando con nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "say": "cowsay Hola"
+  },
+  "keywords": [
+    "experimento",
+    "ejemplo",
+    "node"
+  ],
+  "author": "Arturo Rivas Rojas",
+  "license": "ISC",
+  "dependencies": {
+    "cowsay": "^1.4.0"
+  }
+}
